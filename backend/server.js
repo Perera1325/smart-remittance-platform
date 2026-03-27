@@ -4,15 +4,12 @@ const app = express();
 // Import routes
 const currencyRoutes = require("./routes/currencyRoutes");
 const transactionRoutes = require("./routes/transactionRoutes");
+const integrationRoutes = require("./routes/integrationRoutes");
 
 const PORT = 3000;
 
-// 🔥 VERY IMPORTANT (fixes your issue)
+// 🔥 Middleware (VERY IMPORTANT)
 app.use(express.json());
-
-// Routes
-app.use("/api", currencyRoutes);
-app.use("/api", transactionRoutes);
 
 // Root route
 app.get("/", (req, res) => {
@@ -23,6 +20,11 @@ app.get("/", (req, res) => {
 app.get("/health", (req, res) => {
     res.json({ status: "Server is running" });
 });
+
+// API Routes
+app.use("/api", currencyRoutes);
+app.use("/api", transactionRoutes);
+app.use("/api", integrationRoutes);
 
 // 404 handler
 app.use((req, res) => {
@@ -37,5 +39,5 @@ app.use((err, req, res, next) => {
 
 // Start server
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
