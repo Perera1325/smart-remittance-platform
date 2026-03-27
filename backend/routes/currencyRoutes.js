@@ -6,6 +6,7 @@ const { validateConversionQuery } = require("../utils/validate");
 
 router.get("/convert", (req, res) => {
     const error = validateConversionQuery(req.query);
+
     if (error) {
         return res.status(400).json({ error });
     }
@@ -13,7 +14,11 @@ router.get("/convert", (req, res) => {
     try {
         const { from, to, amount } = req.query;
 
+        // 🔍 Logging (important for Day 6 also)
+        console.log(`Converting ${amount} from ${from} to ${to}`);
+
         const result = convertCurrency(from, to, Number(amount));
+
         res.json(result);
 
     } catch (err) {
